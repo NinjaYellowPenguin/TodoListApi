@@ -1,8 +1,11 @@
 package yellowpenguin.ninja.services;
 
+import org.springframework.stereotype.Service;
+
 import yellowpenguin.ninja.dto.LoginUserRequest;
 import yellowpenguin.ninja.dto.RegisterUserRequest;
 
+@Service
 public class UserService {
 	
 	public String register(RegisterUserRequest request) {

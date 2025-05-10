@@ -2,10 +2,13 @@ package yellowpenguin.ninja.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import yellowpenguin.ninja.dto.CreateTaskRequest;
 import yellowpenguin.ninja.dto.TaskResponse;
 import yellowpenguin.ninja.dto.UpdateTaskRequest;
 
+@Service
 public class TaskService {
 	
 	public TaskResponse create(CreateTaskRequest request) {
