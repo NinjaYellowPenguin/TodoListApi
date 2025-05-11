@@ -1,6 +1,5 @@
 package yellowpenguin.ninja.services;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -9,7 +8,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import yellowpenguin.ninja.dto.LoginUserRequest;
 import yellowpenguin.ninja.dto.RegisterUserRequest;
 import yellowpenguin.ninja.models.User;
 import yellowpenguin.ninja.repos.UserRepository;

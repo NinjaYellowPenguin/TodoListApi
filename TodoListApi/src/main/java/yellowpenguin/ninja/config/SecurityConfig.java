@@ -18,8 +18,6 @@ public class SecurityConfig {
 	
 	@Autowired
 	private JwtAuthFilter jwtAuthFilter;
-	
-	//puede que pete por este autowired OJO.
 	@Autowired
 	private AuthService authService;
 	

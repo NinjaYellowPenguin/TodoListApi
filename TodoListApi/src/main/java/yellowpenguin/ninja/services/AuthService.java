@@ -42,6 +42,11 @@ public class AuthService {
 		return jwtService.refreshToken(refreshToken, user);
 	}
 	
+	public void logout(String token) {		
+		final String jwtToken = extractRefreshToken(token);	
+		jwtService.revokeToken(jwtToken);		
+	}
+	
 	private String extractEmail(String refreshToken) {
 		final String userEmail = jwtService.extractUsername(refreshToken);
 		if(userEmail == null) {
@@ -56,11 +61,4 @@ public class AuthService {
 		}
 		return authHeader.substring(7);
 	}
-
-	public void logout(String token) {		
-		final String jwtToken = extractRefreshToken(token);	
-		jwtService.revokeToken(jwtToken);		
-	}
-
-
 }
