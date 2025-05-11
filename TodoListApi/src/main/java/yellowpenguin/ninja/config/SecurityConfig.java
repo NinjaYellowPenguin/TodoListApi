@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .httpBasic(Customizer.withDefaults())
-            .addFilter(jwtAuthFilter)
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .logout(logout-> logout.logoutUrl("/auth/logout").addLogoutHandler((request, response, authentication) -> {
             	final var authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             	authService.logout(authHeader);

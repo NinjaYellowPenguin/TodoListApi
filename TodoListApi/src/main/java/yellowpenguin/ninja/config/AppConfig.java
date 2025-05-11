@@ -1,6 +1,5 @@
 package yellowpenguin.ninja.config;
 
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,21 +9,20 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import lombok.RequiredArgsConstructor;
 import yellowpenguin.ninja.models.User;
-import yellowpenguin.ninja.repos.UserRepository;
+import yellowpenguin.ninja.services.UserService;
 
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig {
-	//No me gusta que esté aquí
+	
 	@Autowired
-	private UserRepository userRepo;
+	private UserService userService;
 	
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
@@ -37,7 +35,7 @@ public class AppConfig {
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return username->{
-			final User user = userRepo.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("User not found"));
+			final User user = userService.findByEmail(username);
 			return org.springframework.security.core.userdetails.User.builder()
 						.username(user.getEmail())
 						.password(user.getPassword())
