@@ -1,14 +1,10 @@
 package yellowpenguin.ninja.services;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -19,15 +15,11 @@ import yellowpenguin.ninja.models.Token;
 import yellowpenguin.ninja.models.Token.TokenType;
 import yellowpenguin.ninja.models.User;
 import yellowpenguin.ninja.repos.TokenRepository;
-import yellowpenguin.ninja.repos.UserRepository;
 
 @Service
 public class AuthService {
-	
 	@Autowired
-	private PasswordEncoder encoder;
-	@Autowired
-	private UserRepository repo;
+	private UserService userService;
 	@Autowired
 	private TokenRepository tokenRepo;
 	@Autowired
@@ -37,14 +29,8 @@ public class AuthService {
 
 	@Transactional
 	public TokenResponse register(RegisterUserRequest request) {
-		User user  = new User();
-		user.setName(request.getName());
-		user.setEmail(request.getEmail());
-		user.setPassword(encoder.encode(request.getPassword()));
-		user.setId(UUID.randomUUID().toString());
-		user.setCreatedAt(LocalDateTime.now());
 		
-		User savedUser = repo.save(user);
+		User savedUser = userService.createUser(request);
 		
 		String token = jwtService.generateToken(savedUser);
 		String refreshToken = jwtService.generateRefreshToken(savedUser);
@@ -68,7 +54,7 @@ public class AuthService {
 
 	public TokenResponse login(LoginUserRequest request) {
 		authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
-		User user  = repo.findByEmail(request.getEmail()).orElseThrow();
+		User user  = userService.findByEmail(request.getEmail());
 		String token = jwtService.generateToken(user);
 		String refreshToken = jwtService.generateRefreshToken(user);
 		TokenResponse response = new TokenResponse();
@@ -98,7 +84,7 @@ public class AuthService {
 		if(userEmail == null) {
 			throw new IllegalArgumentException("Invalid Email Refresh Token");
 		}
-		final User user = repo.findByEmail(userEmail).orElseThrow(()-> new UsernameNotFoundException(userEmail));
+		final User user = userService.findByEmail(userEmail);
 		
 		if(!jwtService.isTokenValid(refreshToken, user)) {
 			throw new IllegalArgumentException("Invalid Refresh Token");

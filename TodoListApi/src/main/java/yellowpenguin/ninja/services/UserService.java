@@ -1,7 +1,12 @@
 package yellowpenguin.ninja.services;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import yellowpenguin.ninja.dto.LoginUserRequest;
@@ -15,23 +20,18 @@ public class UserService {
 	@Autowired
 	private UserRepository repo;
 	
-	public String register(RegisterUserRequest request) {
-		// TODO: check unique email
-		// Hash password
-		// Register user
-		// JWT Token response
-		return null;		
-	}
+	@Autowired
+	private PasswordEncoder encoder;
 	
-	public String login(LoginUserRequest request) {
-		// TODO: validate email + password
-		// Respond with JWT if successful
-		return null;
-	}
-	
-	public boolean validateToken() {
-		// "message": "Unauthorized"
-		return false;
+	public User createUser(RegisterUserRequest request) {
+		User user  = new User();
+		user.setName(request.getName());
+		user.setEmail(request.getEmail());
+		user.setPassword(encoder.encode(request.getPassword()));
+		user.setId(UUID.randomUUID().toString());
+		user.setCreatedAt(LocalDateTime.now());
+		User savedUser = repo.save(user);
+		return savedUser;
 	}
 	
 	public User findByEmail(String email) {
