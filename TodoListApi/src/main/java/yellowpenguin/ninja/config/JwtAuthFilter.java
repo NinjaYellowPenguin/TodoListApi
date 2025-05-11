@@ -23,6 +23,7 @@ import yellowpenguin.ninja.models.User;
 import yellowpenguin.ninja.repos.TokenRepository;
 import yellowpenguin.ninja.repos.UserRepository;
 import yellowpenguin.ninja.services.JwtService;
+import yellowpenguin.ninja.services.UserService;
 
 @Component
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class JwtAuthFilter extends OncePerRequestFilter{
 	private final JwtService jwtService;
 	private final UserDetailsService userDetailsService;
 	private final TokenRepository tokenRepository;
-	private final UserRepository userRepository;
+	private final UserService userService;
 	
 
 
@@ -53,6 +54,7 @@ public class JwtAuthFilter extends OncePerRequestFilter{
 		final String jwtToken = authHeader.substring(7);
 		final String userEmail = jwtService.extractUsername(jwtToken);
 		
+		
 		if(userEmail == null || SecurityContextHolder.getContext().getAuthentication() != null) {
 			return;
 		}
@@ -65,13 +67,14 @@ public class JwtAuthFilter extends OncePerRequestFilter{
 		}
 		
 		final UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-		final Optional<User> user = userRepository.findByEmail(userDetails.getUsername());
-		if(user.isEmpty()) {
+		User user = userService.findByEmail(userDetails.getUsername());
+		
+		if(user == null) {
 			filterChain.doFilter(request, response);
 			return;
 		}
 		
-		final boolean isTokenValid = jwtService.isTokenValid(jwtToken, user.get());
+		final boolean isTokenValid = jwtService.isTokenValid(jwtToken, user);
 		if(!isTokenValid) {
 			return;
 		}
