@@ -1,6 +1,7 @@
 package yellowpenguin.ninja.core.application.dto.penguinuser;
 
 public class LoginPenguinUserRequest {
+	
 	private String email;
 	private String password;
 	
