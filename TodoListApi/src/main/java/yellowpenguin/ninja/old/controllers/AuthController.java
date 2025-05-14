@@ -28,7 +28,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<TokenResponse> authenticate(@RequestBody final LoginUserRequest request){
+	public ResponseEntity<TokenResponse> authenticate(@RequestBody final LoginPenguinUserRequest request){
 		final TokenResponse token = service.login(request);
 		return ResponseEntity.ok(token);		
 	}

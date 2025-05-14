@@ -27,7 +27,7 @@ public class AuthService {
 		return response;
 	}	
 
-	public TokenResponse login(LoginUserRequest request) {
+	public TokenResponse login(LoginPenguinUserRequest request) {
 		authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
 		User user  = userService.findByEmail(request.getEmail());
 		TokenResponse response = jwtService.createTokens(user);
