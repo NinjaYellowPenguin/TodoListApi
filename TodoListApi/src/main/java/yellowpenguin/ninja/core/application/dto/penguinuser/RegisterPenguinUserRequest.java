@@ -1,5 +1,6 @@
 package yellowpenguin.ninja.core.application.dto.penguinuser;
 
+
 public class RegisterPenguinUserRequest {
 	
 	private String name;
@@ -24,4 +25,5 @@ public class RegisterPenguinUserRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 }
