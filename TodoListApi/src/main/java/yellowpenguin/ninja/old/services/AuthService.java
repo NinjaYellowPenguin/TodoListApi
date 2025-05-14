@@ -14,7 +14,7 @@ import yellowpenguin.ninja.models.User;
 @Service
 public class AuthService {
 	@Autowired
-	private UserService userService;
+	private TaskService userService;
 	@Autowired
 	private JwtService jwtService;
 	@Autowired

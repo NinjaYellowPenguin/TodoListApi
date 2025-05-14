@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import yellowpenguin.ninja.dto.CreateTaskRequest;
 import yellowpenguin.ninja.dto.TaskResponse;
 import yellowpenguin.ninja.dto.UpdateTaskRequest;
+import yellowpenguin.ninja.models.User;
 
 @Service
 public class TaskService {
@@ -27,6 +28,11 @@ public class TaskService {
 		// TODO: Must check auth token before create (in controller)
 		// Check info
 		return null;
+	}
+
+	public void findAllByUser(User user) {
+		
+		
 	}
 
 }

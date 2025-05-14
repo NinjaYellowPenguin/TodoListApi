@@ -21,7 +21,7 @@ import yellowpenguin.ninja.services.UserService;
 public class AppConfig {
 	
 	@Autowired
-	private UserService userService;
+	private TaskService userService;
 	
 	@Autowired
 	private PasswordEncoder encoder;
