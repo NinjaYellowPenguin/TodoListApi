@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 import yellowpenguin.ninja.core.application.dto.task.CreateTaskRequest;
+import yellowpenguin.ninja.core.application.dto.task.PaginatedTaskRequest;
+import yellowpenguin.ninja.core.application.dto.task.PaginatedTaskResponse;
 import yellowpenguin.ninja.core.application.dto.task.TaskResponse;
 import yellowpenguin.ninja.core.application.dto.task.UpdateTaskRequest;
 import yellowpenguin.ninja.core.application.ports.input.TaskService;
@@ -29,9 +31,9 @@ public class TaskServiceImpl implements TaskService{
 		task.setDescription(request.getDescription());		
 		task.setUser(request.getUser());
 		
-		repo.save(task);
+		Task savedTask = repo.save(task);
 		
-		return createTaskResponse(task);
+		return createTaskResponse(savedTask);
 	}
 
 	@Override
@@ -40,20 +42,13 @@ public class TaskServiceImpl implements TaskService{
 		task.setUpdatedAt(LocalDateTime.now());		
 		task.setTitle(request.getTitle());
 		task.setDescription(request.getDescription());
-		task = repo.save(task);
-		return createTaskResponse(task);
+		Task savedTask = repo.save(task);
+		return createTaskResponse(savedTask);
 	}
 
 	@Override
-	public List<TaskResponse> findPaginatedTasks(Object request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void findAllByUser(PenguinUser user) {
-		// TODO Auto-generated method stub
-		
+	public PaginatedTaskResponse findPaginatedTasks(PaginatedTaskRequest request) {
+		return repo.findAllUserTasks(request.getUserId(), request.getPage(), request.getSize());
 	}
 	
 	private TaskResponse createTaskResponse(Task task) {
@@ -64,5 +59,4 @@ public class TaskServiceImpl implements TaskService{
 		response.setDescription(task.getDescription());
 		return response;		
 	}
-
 }
