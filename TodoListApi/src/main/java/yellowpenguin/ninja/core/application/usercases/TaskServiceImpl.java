@@ -10,7 +10,7 @@ import yellowpenguin.ninja.core.application.dto.task.PaginatedTaskResponse;
 import yellowpenguin.ninja.core.application.dto.task.TaskResponse;
 import yellowpenguin.ninja.core.application.dto.task.UpdateTaskRequest;
 import yellowpenguin.ninja.core.application.ports.input.TaskService;
-import yellowpenguin.ninja.core.application.ports.output.TaskRepository;
+import yellowpenguin.ninja.core.application.ports.output.repos.TaskRepository;
 import yellowpenguin.ninja.core.domain.entities.PenguinUser;
 import yellowpenguin.ninja.core.domain.entities.Task;
 

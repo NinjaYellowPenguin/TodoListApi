@@ -1,4 +1,4 @@
-package yellowpenguin.ninja.core.application.ports.output;
+package yellowpenguin.ninja.core.application.ports.output.repos;
 
 import yellowpenguin.ninja.core.application.dto.task.PaginatedTaskResponse;
 import yellowpenguin.ninja.core.domain.entities.Task;

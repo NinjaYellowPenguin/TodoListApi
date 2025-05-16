@@ -1,4 +1,4 @@
-package yellowpenguin.ninja.core.application.ports.output;
+package yellowpenguin.ninja.core.application.ports.output.repos;
 
 import java.util.List;
 

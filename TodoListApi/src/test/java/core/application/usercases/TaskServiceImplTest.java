@@ -16,12 +16,12 @@ import org.mockito.MockitoAnnotations;
 import yellowpenguin.ninja.core.application.dto.task.CreateTaskRequest;
 import yellowpenguin.ninja.core.application.dto.task.TaskResponse;
 import yellowpenguin.ninja.core.application.dto.task.UpdateTaskRequest;
-import yellowpenguin.ninja.core.application.ports.output.TaskRepository;
+import yellowpenguin.ninja.core.application.ports.output.repos.TaskRepository;
 import yellowpenguin.ninja.core.application.usercases.TaskServiceImpl;
 import yellowpenguin.ninja.core.domain.entities.PenguinUser;
 import yellowpenguin.ninja.core.domain.entities.Task;
 
-public class TaskServiceTest {
+public class TaskServiceImplTest {
 	
 	@Mock
 	private TaskRepository repo;
